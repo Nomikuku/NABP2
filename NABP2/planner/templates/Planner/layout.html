@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>NABP</title>
+        <link href="{% static 'Planner/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="layoutHeader">
+            Nomi's Advanced Build Planner - NABP
+        </div>
+        <h2 class="layoutLinks">
+            <a href="{% url 'index' %}">Main Page</a>
+            <a href="{% url 'about' %}">About Page</a>
+            <a href="{% url 'tasks' %}">Tasks Page</a>
+            <a href="{% url 'add' %}">Add Page</a>
+        </h2>
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

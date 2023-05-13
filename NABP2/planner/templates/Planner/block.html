@@ -1,0 +1,12 @@
+
+<div class="block">
+    <img src="{{ block.image_path }}">
+    <span>{{ block.name }}</span>
+    <span>Weight: {{ block.weight }}</span>
+    <span>
+        {% for materials in block.materials %}
+        <span>{{ material.name }}: {{ material.amount }} </span>
+        {% endfor %}
+    </span>
+    <button class="delete-button">X</button>
+</div>

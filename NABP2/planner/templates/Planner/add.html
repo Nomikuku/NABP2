@@ -1,0 +1,132 @@
+{% extends "planner/layout.html" %}
+{% load static %}
+
+{% block content %}
+<h2>
+    This is the tasks page
+</h2>
+
+<div>
+    <select id="block_select" placeholder="Select Block"></select>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/static/data/Planner/blocks.json')
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('block_select');
+                data.blocks.forEach(block => {
+                    const option = document.createElement('option');
+                    option.value = block.id;
+                    option.text = block.name;
+                    select.appendChild(option);
+                });
+            });
+        });
+    </script>
+</div>
+
+<button id="add_block_button">Add</button>
+
+<div id="block_container"></div>
+
+<script>
+    var button = document.getElementById("add_block_button");
+    var container = document.getElementById("block_container");
+    
+    button.addEventListener("click", function() {
+        var dropdown = document.getElementById("block_select");
+        var selectedOption = dropdown.options[dropdown.selectedIndex].value;
+        var selectedBlock = null;
+        
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = JSON.parse(xhr.responseText);
+                for (var i = 0; i < data.blocks.length; i++) {
+                    if (data.blocks[i].id === selectedOption) {
+                        selectedBlock = data.blocks[i];
+                        break;
+                    }
+                }
+                
+                var div = document.createElement("div");
+                div.className = "block";
+
+
+                var blockImg = document.createElement("img");
+                blockImg.src = selectedBlock.block_img;
+                
+                var nameSpan = document.createElement("span");
+                nameSpan.textContent = selectedBlock.name;
+                
+                var weightSpan = document.createElement("span");
+                weightSpan.textContent = " Weight: " + selectedBlock.weight + "Kg";
+                
+                var materialsSpan = document.createElement("span");
+                materialsSpan.textContent = " ";
+                
+                for (var i = 0; i < selectedBlock.materials.length; i++) {
+                    var material = selectedBlock.materials[i];
+                    
+                    var componentImg = document.createElement("img");
+                    componentImg.src = material.component_img;
+
+                    var materialNameSpan = document.createElement("span");
+                    materialNameSpan.textContent = material.name + ": ";
+                    
+                    var materialAmountSpan = document.createElement("span");
+                    materialAmountSpan.textContent = material.amount + " ";
+                    
+                    materialsSpan.appendChild(componentImg);
+                    materialsSpan.appendChild(materialNameSpan);
+                    materialsSpan.appendChild(materialAmountSpan);
+                }
+                
+                var countSpan = document.createElement("span");
+                countSpan.className = "block-count";
+                countSpan.textContent = "Count: 1 ";
+                
+                var addButton = document.createElement("button");
+                addButton.textContent = "+";
+                addButton.addEventListener("click", function() {
+                    var count = parseInt(countSpan.textContent.slice(7));
+                    countSpan.textContent = "Count: " + (count + 1) + " ";
+                });
+                
+                var subtractButton = document.createElement("button");
+                subtractButton.textContent = "-";
+                subtractButton.addEventListener("click", function() {
+                    var count = parseInt(countSpan.textContent.slice(7));
+                    countSpan.textContent = "Count: " + (count - 1) + " ";
+                    if (count <= 1) {
+                        div.remove();
+                    }
+                });
+                
+                var deleteButton = document.createElement("button");
+                deleteButton.textContent = "X";
+                
+                deleteButton.addEventListener("click", function() {
+                    div.remove();
+                });
+                
+                div.appendChild(blockImg);
+                div.appendChild(nameSpan);
+                div.appendChild(countSpan);
+                div.appendChild(addButton);
+                div.appendChild(subtractButton);
+                div.appendChild(deleteButton);
+                div.appendChild(weightSpan);
+                div.appendChild(materialsSpan);
+                
+                container.appendChild(div);
+            }
+        };
+        xhr.open("GET", "/static/data/Planner/blocks.json", true);
+        xhr.send();
+    });
+</script>
+<div>
+    This will calculate the total weight and block cost
+</div>
+{% endblock %}

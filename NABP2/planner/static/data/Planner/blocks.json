@@ -1,0 +1,56 @@
+{
+    "blocks": [
+        {
+            "id": "1000",
+            "name": "Light Armor Block",
+            "block_img": "/static/icons/1000.png",
+            "weight": 500,
+            "materials": [
+                {
+                    "name": "Steel Plate",
+                    "amount": 25,
+                    "component_img": "/static/icons/c01.png"
+                }
+            ]
+        },
+        {
+            "id": "1001",
+            "name": "Light Armor Slope",
+            "block_img": "/static/icons/1001.png",
+            "weight": 260,
+            "materials": [
+                {
+                    "name": "Steel Plate",
+                    "amount": 16,
+                    "component_img": "/static/icons/c01.png"
+                }
+            ]
+        },
+        {
+            "id": "1002",
+            "name": "Light Armor Corner",
+            "block_img": "/static/icons/1002.png",
+            "weight": 80,
+            "materials": [
+                {
+                    "name": "Steel Plate",
+                    "amount": 4,
+                    "component_img": "/static/icons/c01.png"
+                }
+            ]
+        },
+        {
+            "id": "1003",
+            "name": "Light Armor Inv Corner",
+            "block_img": "/static/icons/1003.png",
+            "weight": 420,
+            "materials": [
+                {
+                    "name": "Steel Plate",
+                    "amount": 21,
+                    "component_img": "/static/icons/c01.png"
+                }
+            ]
+        }
+    ]
+}
